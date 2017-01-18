@@ -10,6 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
       auth: '',
       gists: []
     }
@@ -18,13 +19,19 @@ class App extends Component {
 
   getGists() {
 
-    let config = {
+    const config = {
       headers: {
         'x-custom-auth': this.state.auth
       }
     }
 
-    axios.get('http://myapp.local/app_dev.php/api/v1/gists', config);
+    axios.get('http://myapp.local/app_dev.php/api/v1/gists', config)
+      .then(response => {
+        console.log(response);
+        this.setState({ gists: response.data });
+      }).catch(error => {
+        console.log(error);
+      });
   }
 
   componentDidMount() {
@@ -47,16 +54,15 @@ class App extends Component {
   }
 
   render() {
-    let username = () => { 
+    const username = () => { 
       if(localStorage.getItem('username') !== null) {
         return localStorage.getItem('username');
       } else {
         return 'Annonymous';
       }
     };
-    let listOfGists = <ListOfGists 
-                        getGists={this.getGists}
-                        auth={this.state.auth} 
+    const listOfGists = <ListOfGists 
+                        getGists={this.getGists} 
                         gists={this.state.gists}/>
     return (
       <div className="App">

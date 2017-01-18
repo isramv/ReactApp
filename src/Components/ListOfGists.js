@@ -1,24 +1,21 @@
 import React from 'react'
-import axios from 'axios'
+import ItemOfList from './ItemOfList'
 
 class ListOfGists extends React.Component {
 
-	constructor(props) {
-		super(props);
-	}
-	// componentWillMount() {
-	// 	console.log('component will mount')
-	// }
 	render() {
-
+		const items = [];
+		this.props.gists.forEach((element, index) => {
+			items.push(<ItemOfList key={index} gist={element.gist}/>);
+		});
 		return(
 			<div className="list_of_gists">
 				<button onClick={this.props.getGists}>Fetch Gists</button>
+				{items}
 			</div>
 		)
 	}
 
 }
-
 
 export default ListOfGists
