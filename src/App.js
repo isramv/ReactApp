@@ -24,10 +24,9 @@ class App extends Component {
         'x-custom-auth': this.state.auth
       }
     }
-
+    
     axios.get('http://myapp.local/app_dev.php/api/v1/gists', config)
       .then(response => {
-        console.log(response);
         this.setState({ gists: response.data });
       }).catch(error => {
         console.log(error);
@@ -65,14 +64,20 @@ class App extends Component {
                         getGists={this.getGists} 
                         gists={this.state.gists}/>
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome: {username()}</h2>
+      <div className="App container-fluid">
+        <div className="AppHeader row">
+          <img src={logo} className="AppLogo" alt="logo" />
+          <h3>Welcome: {username()}</h3>
         </div>
-        <div className="App-intro">
-          {listOfGists}
+        <div className="row">
+          <div className="AppList col-xs-3">
+            {listOfGists}
+          </div>
+          <div className="AppMain col-xs-9">
+            {this.props.children}
+          </div>
         </div>
+        
       </div>
     );
   }
