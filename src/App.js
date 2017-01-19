@@ -33,7 +33,7 @@ class App extends Component {
       });
   }
 
-  componentDidMount() {
+  componentWillMount() {
     // get auth token.
     if(localStorage.getItem('auth') === null) {
       axios.post('http://myapp.local/app_dev.php/api/login', qs.stringify({
@@ -43,6 +43,7 @@ class App extends Component {
         this.setState({ auth: response.data.token });
         localStorage.setItem('auth', response.data.token);
         localStorage.setItem('username', response.data.username);
+        this.getGists();
       }).catch(error => {
         console.error(error);
         localStorage.clear();
@@ -50,6 +51,10 @@ class App extends Component {
     } else {
       this.setState({ auth: localStorage.getItem('auth') });
     }
+  }
+
+  componentDidMount() {
+    this.getGists();
   }
 
   render() {
@@ -61,12 +66,12 @@ class App extends Component {
       }
     };
     const listOfGists = <ListOfGists 
-                        getGists={this.getGists} 
-                        gists={this.state.gists}/>
+                          getGists={this.getGists} 
+                          gists={this.state.gists}
+                          />
     return (
       <div className="App container-fluid">
         <div className="AppHeader row">
-          <img src={logo} className="AppLogo" alt="logo" />
           <h3>Welcome: {username()}</h3>
         </div>
         <div className="row">

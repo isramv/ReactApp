@@ -10,7 +10,7 @@ class ListOfGists extends React.Component {
 		});
 		return(
 			<div className="list_of_gists">
-				<button onClick={this.props.getGists}>Fetch Gists</button>
+				{/*<button onClick={this.props.getGists}>Fetch Gists</button>*/}
 				{items}
 			</div>
 		)
